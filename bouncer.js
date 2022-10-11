@@ -2,14 +2,18 @@ const http = require('http');
 
 const requestListener = async function (req, res) {
   console.log(req.url);
-  const data = await fetch('https://www.nbrb.by' + req.url);
+  const nbrbResponse = await fetch('https://www.nbrb.by' + req.url);
+  const bodyText = await nbrbResponse.text();
 
-  if (data.ok) {
-    res.writeHead(200);
-    res.end(await data.text());
+  if (nbrbResponse.ok) {
+    res.writeHead(200, {
+      'Content-Length':	bodyText.length,
+      'Content-Type':	'application/json; charset=utf-8'
+    });
+    res.end(bodyText);
   } else {
     res.writeHead(500);
-    res.end(data.statusText);
+    res.end(nbrbResponse.statusText);
   }
 };
 
