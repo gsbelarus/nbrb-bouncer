@@ -6,7 +6,7 @@ const requestListener = async function (req, res) {
 
   if (data.ok) {
     res.writeHead(200);
-    res.end(data.text());
+    res.end(await data.text());
   } else {
     res.writeHead(500);
     res.end(data.statusText);
