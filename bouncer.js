@@ -4,8 +4,13 @@ const requestListener = async function (req, res) {
   console.log(req.url);
   const data = await fetch('https://www.nbrb.by' + req.url);
 
-  res.writeHead(200);
-  res.end(data);
+  if (data.ok) {
+    res.writeHead(200);
+    res.end(data.body);
+  } else {
+    res.writeHead(500);
+    res.end(data.statusText);
+  }
 };
 
 const server = http.createServer(requestListener);
