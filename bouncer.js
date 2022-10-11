@@ -6,12 +6,15 @@ const requestListener = async function (req, res) {
   const bodyText = await nbrbResponse.text();
 
   if (nbrbResponse.ok) {
+    const len = (new TextEncoder().encode(bodyText)).length;
+    console.log(`ok. ${len} bytes...`);
     res.writeHead(200, {
-      'Content-Length':	(new TextEncoder().encode(bodyText)).length,
+      'Content-Length':	len,
       'Content-Type':	'application/json; charset=utf-8'
     });
     res.end(bodyText);
   } else {
+    console.error(`error ${nbrbResponse.statusText}...`);
     res.writeHead(500);
     res.end(nbrbResponse.statusText);
   }
