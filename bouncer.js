@@ -7,7 +7,7 @@ const requestListener = async function (req, res) {
 
   if (nbrbResponse.ok) {
     res.writeHead(200, {
-      'Content-Length':	bodyText.length,
+      'Content-Length':	(new TextEncoder().encode('bodyText')).length,
       'Content-Type':	'application/json; charset=utf-8'
     });
     res.end(bodyText);
